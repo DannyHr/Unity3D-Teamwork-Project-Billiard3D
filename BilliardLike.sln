@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{0225013F-BF76-C55F-52DD-E06B30EC66BC}") = "BilliardLike", "Assembly-CSharp.csproj", "{5D306381-07DC-31D8-3E4D-AD7E346E3F71}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5D306381-07DC-31D8-3E4D-AD7E346E3F71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D306381-07DC-31D8-3E4D-AD7E346E3F71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D306381-07DC-31D8-3E4D-AD7E346E3F71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D306381-07DC-31D8-3E4D-AD7E346E3F71}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
