@@ -1,19 +1,23 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Balls : MonoBehaviour
 {
+	public Rigidbody ballBody;
+	float speed;
 
-	public static int BALL_FUll_FILL = 0;
-	public static int BALL_HALF_FILL = 1;
-	public Rigidbody rigidbody;
-
-	void Awake()
+	// Use this for initialization
+	void Start()
 	{
-		Invoke("HitBall", 1f);  // Calls HitBall in 1 second.
+
 	}
-	private void HitBall()
+
+	// Update is called once per frame
+	void Update()
 	{
-		rigidbody.AddForce(new Vector3(-5f, 0f, 3f), ForceMode.Impulse);
+		speed = ballBody.velocity.magnitude;
+		if (speed < 0.4f)
+		{
+			ballBody.Sleep();
+		}
 	}
 }
