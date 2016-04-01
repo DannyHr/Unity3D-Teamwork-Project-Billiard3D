@@ -1,15 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CameraController : MonoBehaviour {
+public class CameraController : MonoBehaviour
+{
+    public static bool isAutoMode = false;
 
-    static public bool isAutoMode = true;
-
-
-	public GameObject stick;
+    public GameObject stick;
     public Transform ballTransform;
 
-    
     private int cameraRotateSpeed = 30;
     private int cameraZoomSpeed = 4;
     private bool isMouseDown;
@@ -20,29 +18,31 @@ public class CameraController : MonoBehaviour {
     private int currentDistance;
 
     // Use this for initialization
-    void Start () {
-        rotateAxis = new Vector3 (0f, transform.position.y, 0f);
+    void Start()
+    {
+        rotateAxis = new Vector3(0f, transform.position.y, 0f);
         startPosition = transform.position;
         currentDistance = maxDistance;
     }
 
 
-    void Update ()
+    void Update()
     {
         if (isAutoMode) return;
 
         if (Input.GetMouseButtonDown(0)) isMouseDown = true;
         if (Input.GetMouseButtonUp(0)) isMouseDown = false;
 
-        if (isMouseDown) {
+        if (isMouseDown)
+        {
             transform.RotateAround(ballTransform.position, rotateAxis, Input.GetAxis("Mouse X") * cameraRotateSpeed);
-            
-         
+
+
             float mouseY = Input.GetAxis("Mouse Y");
 
-            if ( mouseY != 0.0f)
+            if (mouseY != 0.0f)
             {
-                float value =  mouseY;
+                float value = mouseY;
                 transform.Translate(Vector3.forward * cameraZoomSpeed * Time.deltaTime * value);
             }
         }
@@ -51,13 +51,14 @@ public class CameraController : MonoBehaviour {
 
 
 
-	// Update is called once per frame
-	void LateUpdate () {
+    // Update is called once per frame
+    void LateUpdate()
+    {
         if (isAutoMode)
         {
             transform.RotateAround(ballTransform.position, rotateAxis, -.02f);
         }
 
-	}
+    }
 
 }
