@@ -45,11 +45,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Ball\Balls.cs" />
+     <Compile Include="Assets\Scripts\Ball\BallScript.cs" />
      <Compile Include="Assets\Scripts\Ball\WhiteBall.cs" />
      <Compile Include="Assets\Scripts\Camera\CameraController.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
-     <Compile Include="Assets\Scripts\SetBallInactive.cs" />
+     <Compile Include="Assets\Scripts\PocketScript.cs" />
      <Compile Include="Assets\Scripts\Sound\SoundController.cs" />
      <Compile Include="Assets\Scripts\StickController.cs" />
      <Compile Include="Assets\Scripts\UI\UIBallsType.cs" />
