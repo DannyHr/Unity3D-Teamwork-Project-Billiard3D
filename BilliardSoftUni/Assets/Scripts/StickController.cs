@@ -68,6 +68,9 @@ public class StickController : MonoBehaviour
             var forceX = force.x * multiplier;
             var forceZ = force.z * multiplier;
 
+            Debug.Log("ForceX = " + forceX);
+            Debug.Log("ForceZ = " + forceZ);
+
             var forceVector = new Vector3(forceX * Force, -0.3f, forceZ * Force);
             StartCoroutine(HitBall(forceVector, 1f));
         }
