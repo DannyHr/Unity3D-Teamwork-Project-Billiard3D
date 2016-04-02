@@ -1,14 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 public class StickController : MonoBehaviour
 {
-    public Transform playerTransform;
-    public float rotationSpeed = 4f;
+    public Transform WhiteBallTransform;
+    public Rigidbody WhiteBallRigidbody;
+    public float RotationSpeed;
     public GameObject stick;
+    public GameObject Balls;
 
     private Vector3 rotateAxis;
+    private bool isPressedS = false;
 
     void Start()
     {
@@ -21,7 +25,14 @@ public class StickController : MonoBehaviour
             return;
         }
 
-        var allBalls = GameObject.FindGameObjectsWithTag("balls");
+        var allBalls = new List<GameObject>();
+        for (int i = 0; i < Balls.transform.childCount; i++)
+        {
+            if (Balls.transform.GetChild(i).GetComponent<MeshRenderer>().enabled)
+            {
+                allBalls.Add(Balls.transform.GetChild(i).gameObject);
+            }
+        }
 
         if (allBalls.Any(a => a.GetComponent<Rigidbody>().velocity != Vector3.zero))
         {
@@ -30,7 +41,7 @@ public class StickController : MonoBehaviour
             var currentPos = allBalls[0].GetComponent<Transform>().position;
             this.stick.gameObject.transform.position = new Vector3(currentPos.x - 24.0f, currentPos.y + 2.9f, currentPos.z);
 
-            rotateAxis = new Vector3(0f, playerTransform.position.y, 0f);
+            rotateAxis = new Vector3(0f, this.WhiteBallTransform.position.y, 0f);
         }
         else
         {
@@ -39,19 +50,42 @@ public class StickController : MonoBehaviour
 
         float currentRotation = 0.0f;
 
+        if (Input.GetKeyDown(KeyCode.S) && !isPressedS)
+        {
+            isPressedS = true;
+
+            Debug.Log("Pressed S");
+
+            var stickForce = new Vector3(90f, 0f, -0.3f);
+            StartCoroutine(HitBall(stickForce, 1f));
+        }
+
+        if (Input.GetKeyUp(KeyCode.S))
+        {
+            isPressedS = false;
+        }
+
         if (Input.GetKey(KeyCode.A))
         {
-            currentRotation = rotationSpeed * Time.deltaTime;
+            currentRotation = this.RotationSpeed * Time.deltaTime;
         }
 
         if (Input.GetKey(KeyCode.D))
         {
-            currentRotation = -rotationSpeed * Time.deltaTime;
+            currentRotation = -this.RotationSpeed * Time.deltaTime;
         }
 
         if (currentRotation != 0.0f)
         {
-            this.stick.transform.RotateAround(playerTransform.position, rotateAxis, currentRotation);
+            this.stick.transform.RotateAround(this.WhiteBallTransform.position, rotateAxis, currentRotation);
         }
+    }
+
+    private IEnumerator HitBall(Vector3 force, float delayTime)
+    {
+        yield return new WaitForSeconds(delayTime);
+
+        //ballBody.AddForce(new Vector3(100f, 0f, -0.3f), ForceMode.Impulse);
+        this.WhiteBallRigidbody.AddForce(force, ForceMode.Impulse);
     }
 }

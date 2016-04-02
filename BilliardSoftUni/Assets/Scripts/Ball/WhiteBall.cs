@@ -10,7 +10,6 @@ public class WhiteBall : MonoBehaviour
 
     void Awake()
     {
-
     }
 
     private IEnumerator HitBall(Vector3 force, float delayTime)
@@ -24,7 +23,7 @@ public class WhiteBall : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S))
         {
             var force = new Vector3(100f, 0f, -0.3f);
             StartCoroutine(HitBall(force, 1f));
