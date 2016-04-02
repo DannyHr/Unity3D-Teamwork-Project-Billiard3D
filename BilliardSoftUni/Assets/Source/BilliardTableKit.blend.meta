@@ -24,6 +24,7 @@ ModelImporter:
     100032: TableLeg_001
     100034: TableLeg_002
     100036: TableLeg_003
+    100038: Cube
     400000: //RootNode
     400002: BotTopLane
     400004: BotTopLane_001
@@ -43,6 +44,7 @@ ModelImporter:
     400032: TableLeg_001
     400034: TableLeg_002
     400036: TableLeg_003
+    400038: Cube
     2300000: BotTopLane
     2300002: BotTopLane_001
     2300004: MidLane
@@ -61,6 +63,7 @@ ModelImporter:
     2300030: TableLeg_001
     2300032: TableLeg_002
     2300034: TableLeg_003
+    2300036: Cube
     3300000: BotTopLane
     3300002: BotTopLane_001
     3300004: MidLane
@@ -79,6 +82,7 @@ ModelImporter:
     3300030: TableLeg_001
     3300032: TableLeg_002
     3300034: TableLeg_003
+    3300036: Cube
     4300000: TableLeg_003
     4300002: TableLeg_002
     4300004: TableLeg_001
@@ -97,6 +101,7 @@ ModelImporter:
     4300030: MidLane
     4300032: Pocket
     4300034: Table
+    4300036: Cube
     7400000: Default Take
     9500000: //RootNode
   materials:
