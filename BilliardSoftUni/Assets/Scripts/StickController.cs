@@ -101,5 +101,6 @@ public class StickController : MonoBehaviour
         yield return new WaitForSeconds(delayTime);
 
         this.WhiteBallRigidbody.AddForce(force, ForceMode.Impulse);
+        //this.WhiteBallTransform.Rotate(Vector3.right, Time.deltaTime * 50.0f, Space.World);
     }
 }

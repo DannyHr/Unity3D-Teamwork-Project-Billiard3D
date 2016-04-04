@@ -13,19 +13,20 @@ public class BallType
 
 
 
-public class UIPlayers : MonoBehaviour {
+public class UIPlayers : MonoBehaviour
+{
 
     public static UIPlayers instance;
 
     public GameObject UICanvas;
-    public PlayerController[] players;
-    public BallType[] balls;    
+    public PlayerScript[] players;
+    public BallType[] balls;
     public Image UIBall;
 
     private ArrayList UIBalls;
 
 
-    void Start ()
+    void Start()
     {
         if (instance == null) instance = this;
 
@@ -39,17 +40,17 @@ public class UIPlayers : MonoBehaviour {
 
     public BallType[] SetBallType(int playerNum, int ballType)
     {
-        BallType[] currentBallsType = new BallType[7];       
+        BallType[] currentBallsType = new BallType[7];
         Vector3 position = new Vector3(0.0f, -7.0f, 0.0f);
         Transform ballPanel = UICanvas.transform.Find("Player " + playerNum + " UI").Find("Balls Panel");
         int count = 0;
-        
+
         for (int i = 0, l = balls.Length; i < l; i++)
         {
             BallType ball = balls[i];
-            if( ball.type == ballType )
+            if (ball.type == ballType)
             {
-                Image img = Instantiate(UIBall) as Image;                
+                Image img = Instantiate(UIBall) as Image;
                 UIBallsType uiBallType = img.GetComponent<UIBallsType>();
 
                 uiBallType.sprite = ball.sprite;
@@ -69,16 +70,27 @@ public class UIPlayers : MonoBehaviour {
         return currentBallsType;
     }
 
-    public void SelectBall (int ballNumber)
+
+    public void SelectBall(int ballNumber)
     {
         for (int i = 0; i < UIBalls.Count; i++)
         {
             UIBallsType ball = UIBalls[i] as UIBallsType;
 
-            if ( ball.number == ballNumber)
+            if (ball.number == ballNumber)
             {
                 ball.gameObject.SetActive(false);
             }
         }
+    }
+
+    public string GetPlayerName(int playerNum)
+    {
+        for (int i = 0; i < players.Length; i++)
+        {
+            if (players[i].playerNum == playerNum) return players[i].defaultName;
+        }
+
+        return "";
     }
 }
