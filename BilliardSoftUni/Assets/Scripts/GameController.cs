@@ -25,7 +25,7 @@ public class GameController : MonoBehaviour
 
         isFirstTurn = true;
         shouldChangeTurn = false;
-        pottedSomethingThisTurn = false;
+        pottedSomethingThisTurn = true;
         isFirstBall = true;
         changedTurn = true;
     }
@@ -51,7 +51,7 @@ public class GameController : MonoBehaviour
 
             if (!changedTurn)
             {
-                if (!pottedSomethingThisTurn && !isFirstTurn)
+                if (!pottedSomethingThisTurn)
                 {
                     ChangeTurn();
                 }
@@ -90,6 +90,11 @@ public class GameController : MonoBehaviour
                 var otherPlId = currentTurnPlayerId == 0 ? 1 : 0;
                 var otherPlBallsType = currentBallTag == "stripeBall" ? "solidBall" : "stripeBall";
                 players[otherPlId] = otherPlBallsType;
+
+                if (currentBallTag == "whiteBall")
+                {
+                    shouldChangeTurn = true;
+                }
             }
             else // is not first turn
             {
@@ -114,7 +119,6 @@ public class GameController : MonoBehaviour
                 else if (currentBallTag == "whiteBall")
                 {
                     shouldChangeTurn = true;
-                    Debug.Log("Game Over!");
                 }
                 else // potted stripe or solid ball
                 {

@@ -11,11 +11,8 @@ public class BallType
     public Sprite sprite;
 }
 
-
-
 public class UIPlayers : MonoBehaviour
 {
-
     public static UIPlayers instance;
 
     public GameObject UICanvas;
@@ -24,7 +21,6 @@ public class UIPlayers : MonoBehaviour
     public Image UIBall;
 
     private ArrayList UIBalls;
-
 
     void Start()
     {
@@ -66,10 +62,8 @@ public class UIPlayers : MonoBehaviour
             }
         }
 
-
         return currentBallsType;
     }
-
 
     public void SelectBall(int ballNumber)
     {
@@ -86,11 +80,6 @@ public class UIPlayers : MonoBehaviour
 
     public string GetPlayerName(int playerNum)
     {
-        for (int i = 0; i < players.Length; i++)
-        {
-            if (players[i].playerNum == playerNum) return players[i].defaultName;
-        }
-
-        return "";
+        return string.IsNullOrEmpty(players[playerNum].playerName.text) ? players[playerNum].defaultName : players[playerNum].playerName.text;
     }
 }

@@ -29,6 +29,8 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         if (isAutoMode) return;
+        
+        rotateAxis = new Vector3(0f, this.ballTransform.position.y, 0f);
 
         if (Input.GetMouseButtonDown(0)) isMouseDown = true;
         if (Input.GetMouseButtonUp(0)) isMouseDown = false;

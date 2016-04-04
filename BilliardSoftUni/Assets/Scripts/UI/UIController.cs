@@ -51,7 +51,6 @@ public class UIController : MonoBehaviour
         UIScreens.SetActive(false);
         UIInGame.SetActive(true);
 
-
         StartCoroutine(PlayersTurn(1));
     }
 
@@ -62,9 +61,6 @@ public class UIController : MonoBehaviour
 
     public IEnumerator PlayersTurn(int playerNum)
     {
-        Debug.Log("PlayersTurn");
-
-
         playersTurn.text = UIPlayers.instance.GetPlayerName(playerNum) + "'s Turn";
         playersTurn.gameObject.SetActive(true);
         playerTurnAnimation.SetBool("IsShow", true);
