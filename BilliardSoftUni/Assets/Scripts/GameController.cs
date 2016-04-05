@@ -160,6 +160,6 @@ public class GameController : MonoBehaviour
     {
         currentTurnPlayerId = currentTurnPlayerId == 0 ? 1 : 0;
         Debug.Log("Turn changed!");
-        UIController.Instance.ChangePlayer();
+        UIController.Instance.ChangePlayer(currentTurnPlayerId);
     }
 }

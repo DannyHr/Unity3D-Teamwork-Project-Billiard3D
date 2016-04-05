@@ -18,7 +18,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         cameraRotateSpeed = 30;
-        cameraZoomSpeed = 4;
+        cameraZoomSpeed = 50;
 
         rotateAxis = new Vector3(0.0f, 0.5f, 0.0f);
         rotatePoint = new Vector3(0f, 1f, 0f);
@@ -37,14 +37,16 @@ public class CameraController : MonoBehaviour
         if (isMouseDown)
         {
             transform.RotateAround(rotatePoint, rotateAxis, Input.GetAxis("Mouse X") * cameraRotateSpeed);
+        }
 
-            float mouseY = Input.GetAxis("Mouse Y");
+        if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        {
+            transform.Translate(Vector3.forward * cameraZoomSpeed * Time.deltaTime);
+        }
 
-            if (mouseY != 0.0f)
-            {
-                float value = mouseY;
-                transform.Translate(Vector3.forward * cameraZoomSpeed * Time.deltaTime * value);
-            }
+        if (Input.GetAxis("Mouse ScrollWheel") < 0)
+        {
+            transform.Translate(Vector3.back * cameraZoomSpeed * Time.deltaTime);
         }
     }
 

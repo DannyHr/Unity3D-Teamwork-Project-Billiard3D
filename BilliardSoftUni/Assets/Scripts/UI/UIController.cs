@@ -14,7 +14,7 @@ public class UIController : MonoBehaviour
     public Text playersTurn;
 
     private Animator playerTurnAnimation;
-    private int currentPlayer = 1;
+    private int currentPlayer = 0;
 
     // Use this for initialization
     void Start()
@@ -91,9 +91,9 @@ public class UIController : MonoBehaviour
 
     }
 
-    public void ChangePlayer()
+    public void ChangePlayer(int currentTurnPlayerId)
     {
-        currentPlayer = currentPlayer == 0 ? 1 : 0;
+        currentPlayer = currentTurnPlayerId;
 
         StartCoroutine(PlayersTurn(currentPlayer));
     }
