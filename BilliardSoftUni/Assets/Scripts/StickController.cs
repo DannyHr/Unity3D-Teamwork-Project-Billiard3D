@@ -3,11 +3,12 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.UI;
 
 public class StickController : MonoBehaviour
 {
-    public const float Force = 90.0f;
-
+    public Slider forceSlider;
+    public GameController GameController;
     public Transform WhiteBallTransform;
     public Rigidbody WhiteBallRigidbody;
     public float RotationSpeed;
@@ -15,10 +16,11 @@ public class StickController : MonoBehaviour
     public GameObject Balls;
 
     private Vector3 rotateAxis;
-    private bool isPressedS = false;
+    private bool isPressedS;
 
     void Start()
     {
+        isPressedS = false;
     }
 
     void Update()
@@ -42,7 +44,8 @@ public class StickController : MonoBehaviour
             this.GetComponent<MeshRenderer>().enabled = false;
 
             var currentPos = allBalls[0].GetComponent<Transform>().position;
-            this.stick.gameObject.transform.position = new Vector3(currentPos.x - 24.0f, currentPos.y + 2.9f, currentPos.z);
+            this.stick.gameObject.transform.position = new Vector3(currentPos.x - 24.0f, currentPos.y + 2.9f,
+                currentPos.z);
             this.stick.gameObject.transform.rotation = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
 
             rotateAxis = new Vector3(0f, this.WhiteBallTransform.position.y, 0f);
@@ -53,45 +56,49 @@ public class StickController : MonoBehaviour
 
             float currentRotation = 0.0f;
 
-            if (Input.GetKeyDown(KeyCode.S) && !isPressedS)
+            if (!GameController.gamePaused)
             {
-                isPressedS = true;
+                if (Input.GetKeyDown(KeyCode.S) && !isPressedS)
+                {
+                    isPressedS = true;
 
-                Debug.Log("Pressed S");
+                    var force = this.forceSlider.value;
 
-                var stickPosition = this.stick.transform.position;
-                var ballPosition = this.WhiteBallTransform.position;
+                    var stickPosition = this.stick.transform.position;
+                    var ballPosition = this.WhiteBallTransform.position;
 
-                var force = ballPosition - stickPosition;
+                    var forceDirection = ballPosition - stickPosition;
 
-                var multiplier = 1.0f / (Mathf.Abs(force.x) + Mathf.Abs(force.z));
-                var forceX = force.x * multiplier;
-                var forceZ = force.z * multiplier;
+                    var multiplier = 1.0f / (Mathf.Abs(forceDirection.x) + Mathf.Abs(forceDirection.z));
+                    var forceX = forceDirection.x * multiplier;
+                    var forceZ = forceDirection.z * multiplier;
 
-                Debug.Log("ForceX = " + forceX);
-                Debug.Log("ForceZ = " + forceZ);
+                    //Debug.Log("ForceX = " + forceX);
+                    //Debug.Log("ForceZ = " + forceZ);
 
-                var forceVector = new Vector3(forceX * Force, -0.3f, forceZ * Force);
-                StartCoroutine(HitBall(forceVector, 1f));
-            }
-            else if (Input.GetKey(KeyCode.A))
-            {
-                currentRotation = this.RotationSpeed * Time.deltaTime;
-            }
+                    var forceVector = new Vector3(forceX * force, -0.3f, forceZ * force);
+                    StartCoroutine(HitBall(forceVector, 1f));
+                }
 
-            else if (Input.GetKey(KeyCode.D))
-            {
-                currentRotation = -this.RotationSpeed * Time.deltaTime;
-            }
+                if (Input.GetKey(KeyCode.A))
+                {
+                    currentRotation = this.RotationSpeed * Time.deltaTime;
+                }
 
-            if (currentRotation != 0.0f)
-            {
-                this.stick.transform.RotateAround(this.WhiteBallTransform.position, rotateAxis, currentRotation);
-            }
+                else if (Input.GetKey(KeyCode.D))
+                {
+                    currentRotation = -this.RotationSpeed * Time.deltaTime;
+                }
 
-            if (Input.GetKeyUp(KeyCode.S))
-            {
-                isPressedS = false;
+                if (currentRotation != 0.0f)
+                {
+                    this.stick.transform.RotateAround(this.WhiteBallTransform.position, rotateAxis, currentRotation);
+                }
+
+                if (Input.GetKeyUp(KeyCode.S))
+                {
+                    isPressedS = false;
+                }
             }
         }
     }

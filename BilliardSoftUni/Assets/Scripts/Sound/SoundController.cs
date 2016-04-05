@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
-
-public class SoundController : MonoBehaviour {    
+public class SoundController : MonoBehaviour
+{
     public AudioSource musicClip;
     public AudioSource soundClip;
     public Slider musicVolumeSlider;
@@ -11,17 +10,12 @@ public class SoundController : MonoBehaviour {
 
     public float musicVolume = 0.6f;
     public float soundVolume = 0.6f;
-    
 
-    void Start ()
+    void Start()
     {
-        //musicVolumeSlider = GameObject.Find("Music Volume Slider").GetComponent<Slider>();
-        //soundVolumeSlider = GameObject.Find("Sound Volume Slider").GetComponent<Slider>();
-
-
         musicVolumeSlider.value = musicVolume * 100;
         soundVolumeSlider.value = soundVolume * 100;
-        
+
         musicVolumeSlider.onValueChanged.AddListener(delegate { OnMusicVolumeChange(); });
         soundVolumeSlider.onValueChanged.AddListener(delegate { OnSoundVolumeChange(); });
 
@@ -30,7 +24,7 @@ public class SoundController : MonoBehaviour {
 
     }
 
-    public void OnMusicVolumeChange ()
+    public void OnMusicVolumeChange()
     {
         musicVolume = musicVolumeSlider.value * 0.01f;
 
@@ -43,10 +37,8 @@ public class SoundController : MonoBehaviour {
         soundVolume = musicVolumeSlider.value * 0.01f;
     }
 
-    public void BallHit ()
+    public void BallHit()
     {
         soundClip.Play();
     }
-    
-
 }

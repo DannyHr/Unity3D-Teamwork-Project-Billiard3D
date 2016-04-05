@@ -6,8 +6,10 @@ public class GameController : MonoBehaviour
 {
     public GameObject Balls;
 
+    internal bool gamePaused;
     internal Queue<string> pottedBalls;
     internal int currentTurnPlayerId;
+
     private string[] players; // ["stripeBall", "solidBall"]
     private bool isFirstTurn;
     private bool shouldChangeTurn;
@@ -15,9 +17,10 @@ public class GameController : MonoBehaviour
     private bool isFirstBall;
     private bool changedTurn;
 
-    // Use this for initialization
     void Start()
     {
+        gamePaused = true;
+
         pottedBalls = new Queue<string>();
 
         players = new string[2];
@@ -36,9 +39,15 @@ public class GameController : MonoBehaviour
         var allBalls = new List<GameObject>();
         for (int i = 0; i < Balls.transform.childCount; i++)
         {
-            if (Balls.transform.GetChild(i).gameObject.activeSelf)
+            var currentBall = Balls.transform.GetChild(i).gameObject;
+
+            if (currentBall.activeSelf)
             {
-                allBalls.Add(Balls.transform.GetChild(i).gameObject);
+                allBalls.Add(currentBall);
+            }
+            else
+            {
+                UIPlayers.instance.SelectBall(currentBall.name);
             }
         }
 
@@ -85,15 +94,21 @@ public class GameController : MonoBehaviour
 
             if (isFirstTurn)
             {
-                players[currentTurnPlayerId] = currentBallTag;
-
-                var otherPlId = currentTurnPlayerId == 0 ? 1 : 0;
-                var otherPlBallsType = currentBallTag == "stripeBall" ? "solidBall" : "stripeBall";
-                players[otherPlId] = otherPlBallsType;
-
                 if (currentBallTag == "whiteBall")
                 {
                     shouldChangeTurn = true;
+                }
+                else
+                {
+                    UIPlayers.instance.SetBallType(currentTurnPlayerId, currentBallTag == "solidBall" ? 0 : 1);
+                    UIPlayers.instance.SetBallType(currentTurnPlayerId == 1 ? 0 : 1,
+                        currentBallTag == "solidBall" ? 1 : 0);
+
+                    players[currentTurnPlayerId] = currentBallTag;
+
+                    var otherPlId = currentTurnPlayerId == 0 ? 1 : 0;
+                    var otherPlBallsType = currentBallTag == "stripeBall" ? "solidBall" : "stripeBall";
+                    players[otherPlId] = otherPlBallsType;
                 }
             }
             else // is not first turn
@@ -133,6 +148,11 @@ public class GameController : MonoBehaviour
                     }
                 }
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            UIController.Instance.ShowWellcomeScreen();
         }
     }
 

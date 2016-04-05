@@ -8,37 +8,35 @@ public class CameraController : MonoBehaviour
     public GameObject stick;
     public Transform ballTransform;
 
-    private int cameraRotateSpeed = 30;
-    private int cameraZoomSpeed = 4;
+    private int cameraRotateSpeed;
+    private int cameraZoomSpeed;
     private bool isMouseDown;
     private Vector3 rotateAxis;
-    private Vector3 startPosition;
-    private int minDistance = 10;
-    private int maxDistance = 30;
-    private int currentDistance;
+    private Vector3 rotatePoint;
 
     // Use this for initialization
     void Start()
     {
-        rotateAxis = new Vector3(0f, transform.position.y, 0f);
-        startPosition = transform.position;
-        currentDistance = maxDistance;
-    }
+        cameraRotateSpeed = 30;
+        cameraZoomSpeed = 4;
 
+        rotateAxis = new Vector3(0.0f, 0.5f, 0.0f);
+        rotatePoint = new Vector3(0f, 1f, 0f);
+    }
 
     void Update()
     {
-        if (isAutoMode) return;
-        
-        rotateAxis = new Vector3(0f, this.ballTransform.position.y, 0f);
+        if (isAutoMode)
+        {
+            return;
+        }
 
         if (Input.GetMouseButtonDown(0)) isMouseDown = true;
         if (Input.GetMouseButtonUp(0)) isMouseDown = false;
 
         if (isMouseDown)
         {
-            transform.RotateAround(ballTransform.position, rotateAxis, Input.GetAxis("Mouse X") * cameraRotateSpeed);
-
+            transform.RotateAround(rotatePoint, rotateAxis, Input.GetAxis("Mouse X") * cameraRotateSpeed);
 
             float mouseY = Input.GetAxis("Mouse Y");
 
@@ -48,10 +46,7 @@ public class CameraController : MonoBehaviour
                 transform.Translate(Vector3.forward * cameraZoomSpeed * Time.deltaTime * value);
             }
         }
-
     }
-
-
 
     // Update is called once per frame
     void LateUpdate()
@@ -60,7 +55,5 @@ public class CameraController : MonoBehaviour
         {
             transform.RotateAround(ballTransform.position, rotateAxis, -.02f);
         }
-
     }
-
 }

@@ -6,38 +6,39 @@ public class UIController : MonoBehaviour
 {
     public static UIController Instance;
 
+    public GameController gameController;
     public GameObject screenWellcome;
     public GameObject screenOptions;
     public GameObject UIScreens;
     public GameObject UIInGame;
     public Text playersTurn;
 
-    private GameObject currentScreen;
     private Animator playerTurnAnimation;
     private int currentPlayer = 1;
+
     // Use this for initialization
     void Start()
     {
         Instance = this;
-        currentScreen = screenWellcome;
         playerTurnAnimation = playersTurn.gameObject.GetComponent<Animator>();
 
         playersTurn.gameObject.SetActive(false);
-
-        //PlayersTurn(2);
-        //StartCoroutine(PlayersTurn(2));
-
-        //StartCoroutine(GameFinished("David"));
     }
 
     public void ShowOptionsScreen()
     {
+        gameController.gamePaused = true;
+
         screenWellcome.SetActive(false);
         screenOptions.SetActive(true);
     }
 
     public void ShowWellcomeScreen()
     {
+        gameController.gamePaused = true;
+
+        UIScreens.SetActive(true);
+        UIInGame.SetActive(false);
         screenWellcome.SetActive(true);
         screenOptions.SetActive(false);
     }
@@ -45,8 +46,9 @@ public class UIController : MonoBehaviour
     public void StartGame()
     {
         CameraController.isAutoMode = false;
+        gameController.gamePaused = false;
 
-        var playerFields = UIInGame.GetComponentsInChildren<Text>();
+        //var playerFields = UIInGame.GetComponentsInChildren<Text>();
 
         UIScreens.SetActive(false);
         UIInGame.SetActive(true);
@@ -80,7 +82,7 @@ public class UIController : MonoBehaviour
         {
             playersTurn.text = UIPlayers.instance.GetPlayerName(playerId) + " HAS LOST";
         }
-        
+
         playersTurn.gameObject.SetActive(true);
         playerTurnAnimation.SetBool("IsShow", true);
 

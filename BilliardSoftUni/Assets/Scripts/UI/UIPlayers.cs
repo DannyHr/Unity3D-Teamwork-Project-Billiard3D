@@ -2,10 +2,10 @@
 using System.Collections;
 using UnityEngine.UI;
 
-
 [System.Serializable]
 public class BallType
 {
+    public string name;
     public int type = 0;
     public int number = 0;
     public Sprite sprite;
@@ -33,12 +33,13 @@ public class UIPlayers : MonoBehaviour
     {
         players[playerNum - 1].ChangeName();
     }
-
+    
     public BallType[] SetBallType(int playerNum, int ballType)
     {
         BallType[] currentBallsType = new BallType[7];
         Vector3 position = new Vector3(0.0f, -7.0f, 0.0f);
-        Transform ballPanel = UICanvas.transform.Find("Player " + playerNum + " UI").Find("Balls Panel");
+        int plrNum = playerNum + 1;
+        Transform ballPanel = UICanvas.transform.Find("Player " + plrNum + " UI").Find("Balls Panel");
         int count = 0;
 
         for (int i = 0, l = balls.Length; i < l; i++)
@@ -51,6 +52,7 @@ public class UIPlayers : MonoBehaviour
 
                 uiBallType.sprite = ball.sprite;
                 uiBallType.number = ball.number;
+                uiBallType.Name = ball.name;
                 img.transform.SetParent(ballPanel, false);
                 img.GetComponent<RectTransform>().transform.localPosition = position;
 
@@ -65,13 +67,13 @@ public class UIPlayers : MonoBehaviour
         return currentBallsType;
     }
 
-    public void SelectBall(int ballNumber)
+    public void SelectBall(string ballName)
     {
         for (int i = 0; i < UIBalls.Count; i++)
         {
             UIBallsType ball = UIBalls[i] as UIBallsType;
-
-            if (ball.number == ballNumber)
+            
+            if (ball.Name == ballName)
             {
                 ball.gameObject.SetActive(false);
             }

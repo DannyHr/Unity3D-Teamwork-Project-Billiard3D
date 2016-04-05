@@ -9,26 +9,17 @@ public class PlayerScript : MonoBehaviour
     public int ballType;
     public Text playerName;
     public InputField playerInput;
-
     public UIPlayers UIPlayer;
-
 
     private BallType[] balls;
 
     // Use this for initialization
     void Start()
     {
-
         playerInput.placeholder.GetComponent<Text>().text = defaultName;
 
         ChangeName();
-        //SetBallType(ballType);
-
-
-        //Invoke("aaa", 1);
     }
-
-
 
     public void ChangeName()
     {
